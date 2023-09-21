@@ -3,27 +3,29 @@ import axios from 'axios';
 import {useLocation, useNavigate} from "react-router-dom"
 
 const Update=()=> {
-  const [book,setBook]=useState({
-    title:"",
+  const [note,setNote]=useState({
+    date:"",
+    category:"",
+    payee:"",
     desc:"",
-    price:null,
-    cover:"",
+    amount:null,
+    total:null,
+    note:"",
   });
 
   const navigate=useNavigate()
   const location=useLocation()
-
-  const bookId = location.pathname.split("/")[2]
+  console.log(location.pathname)
+  const sno = location.pathname.split("/")[2]
 
   const handleChange=(e)=>{
-    setBook((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+    setNote((prev)=>({ ...prev, [e.target.name]:e.target.value}));
   };
-  console.log(book)
   
   const handleClick =async e=>{
     e.preventDefault()
     try{
-      await axios.put("http://localhost:8800/book/"+bookId,book)
+      await axios.put("http://localhost:8800/note/"+sno,note)
       navigate("/")
     }catch(err){
       console.log(err)
@@ -31,33 +33,45 @@ const Update=()=> {
   }
   return (
     <div className='form'>
-      <h1>Update the Book</h1>
+      <h2>Update {note.payee}</h2>
       <input
       type='text'
-      placeholder='Title'
+      placeholder='Enter Date'
       onChange={handleChange}
-      name='title'
+      name='date'
       />
       <input
       type='text'
-      placeholder='Discription'
+      placeholder='Enter Category'
       onChange={handleChange}
-      name='desc'
+      name='category'
+      />
+      <input
+      type='text'
+      placeholder='Enter Payee Name'
+      onChange={handleChange}
+      name='payee'
       />
       <input
       type='number'
-      placeholder='Price'
+      placeholder='Enter the Amount'
       onChange={handleChange}
-      name='price'
+      name='amount'
+      />
+      <input
+      type='number'
+      placeholder='Enter the Total'
+      onChange={handleChange}
+      name='total'
       />
       <input
       type='text'
-      placeholder='Cover Image'
+      placeholder='Add short note'
       onChange={handleChange}
-      name='cover'
+      name='note'
       />
       
-      <button className='formButton' onClick={handleClick}>Add</button>
+      <button onClick={handleClick}>Update</button>
     </div>
   )
 }

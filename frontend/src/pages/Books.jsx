@@ -19,9 +19,9 @@ const Books=()=> {
     fetchAllNotes()
   },[]);
 
-  const handleDelete= async (id)=>{
+  const handleDelete= async (sno)=>{
     try{
-      await axios.delete("http://localhost:8800/book/"+id);
+      await axios.delete("http://localhost:8800/note/"+sno);
       window.location.reload()
     }catch(err){
       console.log(err);
@@ -35,11 +35,11 @@ const Books=()=> {
         {notes.map(note=>(
           <div className="note" key={note.sno}>
             {/* {book.cover && <img src="" alt="" />} */}
-            <h2>{note.title}</h2>
+            <h2>{note.payee}</h2>
             <p>{note.desc}</p>
-             <span>{note.payee}</span>
-             {/* <button className='delete' onClick={()=>handleDelete(book.id)}>Delete</button> */}
-             {/* <button className='update'><Link to={`/update/${book.id}`}>Update</Link></button> */}
+             <span>{note.amount}</span>
+             <button className='delete' onClick={()=>handleDelete(note.sno)}>Delete</button>
+             <button className='update'><Link to={`/update/${note.sno}`}>Update</Link></button>
           </div>
         ))}
 
