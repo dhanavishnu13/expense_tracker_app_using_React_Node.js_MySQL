@@ -42,30 +42,31 @@ app.post("/note",(req,res)=>{
     ]
     db.query(q,[values],(err,data)=>{
         if(err) return res.json(err)
-        return res.json("Book has been added.")
+        return res.json("Expense has been added.")
     })
 
 })
 
-app.delete("/book/:id", (req,res)=>{
+app.delete("/note/:id", (req,res)=>{
     const bookId=req.params.id;
-    const q="DELETE FROM books WHERE id=?"
+    const q="DELETE FROM myexpense WHERE id=?"
 
     db.query(q,[bookId],(err,data)=>{
         if(err) return res.json(err)
-        return res.json("Book has been deleted.")
+        return res.json("Expense has been deleted.")
     })
 })
 
-app.put("/book/:id", (req,res)=>{
-    const bookId=req.params.id;
-    const q="UPDATE books SET `title`=?,`desc`=?,`price`=?,`cover`=? WHERE id=?"
+app.put("/note/:sno", (req,res)=>{
+    const bookId=req.params.sno;
+    const q="UPDATE myexpense SET `date`=?,`category`=?,`payee`=?,`desc`=?,`amount`=?,`total`=?,`note`=? WHERE sno=?"
     const values=[
-        req.body.date,
+       req.body.date,
         req.body.category,
         req.body.payee,
         req.body.desc,
         req.body.amount,
+        req.body.total,
         req.body.note
     ]
     db.query(q,[...values, bookId],(err,data)=>{
