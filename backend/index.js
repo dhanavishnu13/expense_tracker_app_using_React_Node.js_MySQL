@@ -9,7 +9,7 @@ const db=mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"root",
-    database:"test"
+    database:"myscheme"
 })
 
 // to send from html body
@@ -20,22 +20,25 @@ app.get("/",(req,res)=>{
     res.json("Hello World")
 })
 
-app.get("/book",(req,res)=>{
-    const q="SELECT * FROM books"
+app.get("/note",(req,res)=>{
+    const q="SELECT * FROM myexpense"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
 })
 
-app.post("/book",(req,res)=>{
-    const q ="INSERT INTO books (`title`,`desc`,`price`,`cover`) VALUES (?)";
+app.post("/note",(req,res)=>{
+    const q ="INSERT INTO myexpense (`date`,`category`,`payee`,`desc`,`amount`,`total`,`note`) VALUES (?)";
     // const values=["title from backend","desc from backend","cover pic from backend"];
     const values=[
-        req.body.title,
+        req.body.date,
+        req.body.category,
+        req.body.payee,
         req.body.desc,
-        req.body.price,
-        req.body.cover
+        req.body.amount,
+        req.body.total,
+        req.body.note
     ]
     db.query(q,[values],(err,data)=>{
         if(err) return res.json(err)
@@ -58,14 +61,16 @@ app.put("/book/:id", (req,res)=>{
     const bookId=req.params.id;
     const q="UPDATE books SET `title`=?,`desc`=?,`price`=?,`cover`=? WHERE id=?"
     const values=[
-        req.body.title,
+        req.body.date,
+        req.body.category,
+        req.body.payee,
         req.body.desc,
-        req.body.price,
-        req.body.cover
+        req.body.amount,
+        req.body.note
     ]
     db.query(q,[...values, bookId],(err,data)=>{
         if(err) return res.json(err)
-        return res.json("Book has been updated.")
+        return res.json("note has been updated.")
     })
 })
 
