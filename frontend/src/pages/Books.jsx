@@ -4,19 +4,19 @@ import axios from 'axios'
 import { Link } from "react-router-dom";
 
 const Books=()=> {
-  const [books, setBooks]= useState([]);
+  const [notes, setNotes]= useState([]);
 
   useEffect(()=>{
-    const fetchAllBooks= async ()=>{
+    const fetchAllNotes= async ()=>{
         try{
-          const res=await axios.get("http://localhost:8800/book");
+          const res=await axios.get("http://localhost:8800/note");
           // console.log(res)
-          setBooks(res.data);
+          setNotes(res.data);
         }catch(err){
           console.log(err);
         }
     }
-    fetchAllBooks()
+    fetchAllNotes()
   },[]);
 
   const handleDelete= async (id)=>{
@@ -30,16 +30,16 @@ const Books=()=> {
 
   return (
     <div>
-      <h1>My Books</h1>
-      <div className='books'>
-        {books.map(book=>(
-          <div className="book" key={book.id}>
-            {book.cover && <img src="" alt="" />}
-            <h2>{book.title}</h2>
-            <p>{book.desc}</p>
-             <span>{book.price}</span>
-             <button className='delete' onClick={()=>handleDelete(book.id)}>Delete</button>
-             <button className='update'><Link to={`/update/${book.id}`}>Update</Link></button>
+      <h1>My Expense</h1>
+      <div className='notes'>
+        {notes.map(note=>(
+          <div className="note" key={note.sno}>
+            {/* {book.cover && <img src="" alt="" />} */}
+            <h2>{note.title}</h2>
+            <p>{note.desc}</p>
+             <span>{note.payee}</span>
+             {/* <button className='delete' onClick={()=>handleDelete(book.id)}>Delete</button> */}
+             {/* <button className='update'><Link to={`/update/${book.id}`}>Update</Link></button> */}
           </div>
         ))}
 
