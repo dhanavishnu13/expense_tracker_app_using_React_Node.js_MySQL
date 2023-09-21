@@ -3,24 +3,27 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom"
 
 const Add=()=> {
-  const [book,setBook]=useState({
-    title:"",
+  const [note,setNote]=useState({
+    date:"",
+    category:"",
+    payee:"",
     desc:"",
-    price:null,
-    cover:"",
+    amount:null,
+    total:null,
+    note:"",
   });
 
   const navigate=useNavigate()
 
   const handleChange=(e)=>{
-    setBook((prev)=>({ ...prev, [e.target.name]:e.target.value}));
+    setNote((prev)=>({ ...prev, [e.target.name]:e.target.value}));
   };
-  console.log(book)
+  console.log(note)
   
   const handleClick =async e=>{
     e.preventDefault()
     try{
-      await axios.post("http://localhost:8800/book",book)
+      await axios.post("http://localhost:8800/note",note)
       navigate("/")
     }catch(err){
       console.log(err)
@@ -30,27 +33,39 @@ const Add=()=> {
     <div className='form'>
       <input
       type='text'
-      placeholder='Title'
+      placeholder='Enter Date'
       onChange={handleChange}
-      name='title'
+      name='date'
       />
       <input
       type='text'
-      placeholder='Discription'
+      placeholder='Enter Category'
       onChange={handleChange}
-      name='desc'
+      name='category'
+      />
+      <input
+      type='text'
+      placeholder='Enter Payee Name'
+      onChange={handleChange}
+      name='payee'
       />
       <input
       type='number'
-      placeholder='Price'
+      placeholder='Enter the Amount'
       onChange={handleChange}
-      name='price'
+      name='amount'
+      />
+      <input
+      type='number'
+      placeholder='Enter the Total'
+      onChange={handleChange}
+      name='total'
       />
       <input
       type='text'
-      placeholder='Cover Image'
+      placeholder='Add short note'
       onChange={handleChange}
-      name='cover'
+      name='note'
       />
       
       <button onClick={handleClick}>Add</button>
