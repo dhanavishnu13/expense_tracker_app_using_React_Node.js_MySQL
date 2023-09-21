@@ -47,9 +47,9 @@ app.post("/note",(req,res)=>{
 
 })
 
-app.delete("/note/:id", (req,res)=>{
-    const bookId=req.params.id;
-    const q="DELETE FROM myexpense WHERE id=?"
+app.delete("/note/:sno", (req,res)=>{
+    const bookId=req.params.sno;
+    const q="DELETE FROM myexpense WHERE sno=?"
 
     db.query(q,[bookId],(err,data)=>{
         if(err) return res.json(err)
@@ -71,7 +71,7 @@ app.put("/note/:sno", (req,res)=>{
     ]
     db.query(q,[...values, bookId],(err,data)=>{
         if(err) return res.json(err)
-        return res.json("note has been updated.")
+        return res.json("Expense has been updated.")
     })
 })
 
