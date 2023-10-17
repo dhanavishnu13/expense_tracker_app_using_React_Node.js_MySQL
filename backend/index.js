@@ -20,6 +20,49 @@ app.get("/",(req,res)=>{
     res.json("Hello World")
 })
 
+app.post('/register', (req, res)=> {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const q="INSERT INTO users (username, password) VALUES (?,?)"
+    db.query(q
+      ,
+      [username, password],
+      (err, res)=> {
+        if (err){
+            console.log(err);
+        }
+        // else{
+        //     return res.json("Success")
+        // }
+      
+      }
+    );
+ });
+
+ app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const q="SELECT * FROM users WHERE username = ? AND password = ?";
+    db.query(
+        q,
+        [username, password],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            } 
+            // else{
+            //     return res.json("Success")
+            // }
+    
+            if (result.length > 0) {
+                res.send( result);
+                }else({message: "Wrong username/password comination!"});
+            
+        }
+    );
+   });
+
 app.get("/note",(req,res)=>{
     const q="SELECT * FROM myexpense"
     db.query(q,(err,data)=>{

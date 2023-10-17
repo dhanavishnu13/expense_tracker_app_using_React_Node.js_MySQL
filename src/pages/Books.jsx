@@ -36,7 +36,7 @@ const Books=()=> {
     const { name, value } = e.target;
     setDateFilter({ ...dateFilter, [name]: value });
   };
-let totalAmount = 0;
+
   const filteredNotes = notes.filter((note) => {
     if (!dateFilter.startDate || !dateFilter.endDate) {
       return true; // No filter applied, show all notes
@@ -47,7 +47,7 @@ let totalAmount = 0;
     const startDate = new Date(dateFilter.startDate);
     const endDate = new Date(dateFilter.endDate);
 
-    
+    let totalAmount = 0;
 
     // Loop through filteredNotes to calculate the total amount
     filteredNotes.forEach((note) => {
@@ -59,6 +59,15 @@ let totalAmount = 0;
     return noteDate >= startDate && noteDate <= endDate;
   });
 
+  const filtered = notes.filter((note) =>  {
+    // Initialize a variable to store the total amount
+    let totalAmount = 0;
+  
+    // Loop through filteredNotes to calculate the total amount
+    filteredNotes.forEach((note) => {
+      totalAmount += parseFloat(note.amount); // Assuming amount is a string, convert it to a float for addition
+    })});
+
   
 
   return (
@@ -66,6 +75,7 @@ let totalAmount = 0;
       <h1>My Expense</h1>
       <div className='notes'>
       <div>
+      <h1>Notes</h1>
       <div>
         <label>Start Date:</label>
         <input
@@ -119,7 +129,7 @@ let totalAmount = 0;
 
       </table>
       <div>
-        <strong>Total Amount: {totalAmount.toFixed(2)}</strong> Display total amount with two decimal places
+        {/* <strong>Total Amount: {totalAmount.toFixed(2)}</strong> Display total amount with two decimal places */}
       </div>
     </div>
 
